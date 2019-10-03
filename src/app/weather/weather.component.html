@@ -1,0 +1,25 @@
+<mat-card>
+  <div>
+    <mat-card-title>{{ title }}</mat-card-title>
+    <mat-card-subtitle
+      matTooltip="Min: {{ weather.main.temp_min }}, High: {{
+        weather.main.temp_max
+      }}"
+    >
+      Average:
+      <strong>{{ getAverage(weather.main) | number: '1.0-1' }}°C</strong>
+    </mat-card-subtitle>
+    <mat-card-subtitle>
+      Wind: <strong>{{ toKmPerHour(weather.wind.speed) }} km/h</strong>
+      <mat-icon
+        inline
+        style.transform="rotate({{ weather.wind.deg }}deg)"
+        class="wind-direction"
+        >arrow_downward
+      </mat-icon>
+    </mat-card-subtitle>
+  </div>
+  <div class="flex-col">
+    <ng-content></ng-content>
+  </div>
+</mat-card>

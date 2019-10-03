@@ -1,0 +1,43 @@
+<div *ngIf="current$ | async as current; else noData">
+  <mat-toolbar color="primary">
+    <h1>Current Weather</h1>
+    <span class="flex-spacer"></span>
+    <button (click)="refreshData()" mat-flat-button matTooltip="Refresh weather data"> 
+      <mat-icon>refresh</mat-icon>
+    </button>
+    
+  </mat-toolbar>
+  <div class="weather-item-wrapper">
+    <app-weather
+      *ngFor="let weather of current"
+      [weather]="weather"
+      [title]="weather.name"
+    >
+      <mat-card-subtitle>{{
+        weather.dt * 1000 | date: 'EEEE d MMMM'
+      }}</mat-card-subtitle>
+      <mat-card-actions>
+        <button
+          mat-stroked-button
+          color="accent"
+          [routerLink]="['./', weather.id]"
+        >
+          FORECAST
+        </button>
+      </mat-card-actions>
+    </app-weather>
+  </div>
+</div>
+
+<div *ngIf="loading" class="loader-shade">
+  <div class="loader">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
+
+<ng-template #noData>
+  <span *ngIf="!loading">
+    <app-error  title="An error occurd while getting weather data"></app-error>
+  </span>
+</ng-template>
+  
